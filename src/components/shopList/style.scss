@@ -1,0 +1,28 @@
+body {
+    background-color: #f5f5f5;
+}
+.shop-list-item {
+    podding-right: 20px;
+}
+.input-wrap {
+    margin: 20px 0;
+}
+.warn-message {
+    position: absolute;
+    font-size: 10px;
+}
+.modal{
+    &-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    &-header {
+       .close {
+            position: absolute;
+            right: 8px;
+            top: 3px;
+            font-size: 44px;
+            z-index: 1;
+        }
+    }
+}
