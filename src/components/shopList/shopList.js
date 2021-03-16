@@ -27,7 +27,7 @@ export const ShopList = (props) => {
         </div>
         
         <ListGroup>
-            {(props.filterShop).length < 1 ? props.shops.map( shop => (
+            {(!props.isFilterKey && (props.filterShop).length < 1) ? props.shops.map( shop => (
                 <ListGroupItem className="clearfix shop-list-item" key={`p${shop.id}`} >
                     <div className="pull-left">{`${shop.type} - ${shop.location}`} </div>
                     <MoreButton id={shop.id} shop={shop} actionMethod={props.editShop} deleteShop={props.deleteShop}/>

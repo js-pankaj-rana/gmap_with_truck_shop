@@ -8,12 +8,13 @@ import {
   Label,
   Input,
   Alert } from 'reactstrap';
+import {DAYS} from './../../constant/constant';
+
 
 export const FormComponent = (props) => {
     let {actionMethod, shop = undefined, toggle, toggleAction = null}   =  props;
-
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    const [data, setData] = useState({})
+    
+  const [data, setData] = useState({})
     const [error, setError] = useState({})
 
     
@@ -21,6 +22,7 @@ export const FormComponent = (props) => {
         let {name, value, nodeName} = e.currentTarget;
         if(nodeName === 'SELECT'){
           value = Array.from(e.target.selectedOptions, option => Number(option.value))
+          console.log("value===>", value);
           value.sort();
         }
         setData({
@@ -39,7 +41,7 @@ export const FormComponent = (props) => {
         location = undefined,
         openingTime = undefined,
         closingTime = undefined,
-        openDay = undefined,
+        openDay = [],
         lat = undefined,
         lng = undefined } = data;
       
@@ -112,7 +114,7 @@ export const FormComponent = (props) => {
               type="text"
               name="lat"
               id="locationLat"
-              placeholder="56.2121"
+              placeholder="28.625811"
               onChange={onChangeValue} 
               defaultValue={data.lat}
               pattern="[-+]?[0-9]*[.,]?[0-9]+"
@@ -125,7 +127,7 @@ export const FormComponent = (props) => {
               type="text"
               name="lng"
               id="locationLong"
-              placeholder="56.2121"
+              placeholder="77.234296"
               onChange={onChangeValue} 
               defaultValue={data.lng}
               pattern="[-+]?[0-9]*[.,]?[0-9]+"
@@ -163,22 +165,18 @@ export const FormComponent = (props) => {
         <FormGroup>
           <Label for="daySelect">Select open days (Use ctrl + click)</Label>
           <Input type="select" name="openDay" id="daySelect" multiple onChange={onChangeValue} 
-            defaultValue={data.openDay}
-          required>
-              { days.map( (day, index) => {
-                let option = <option value={index+1} key={`day${index}`}>{day}</option> 
+            required>
+              { DAYS.map( (day, index) => {
+                let option = <option value={index} key={`day${index}`}>{day}</option> 
                 
-                if(data.openDay && data.openDay[index] === index+1){
-                  option = <option value={index+1} selected key={`day${index}`}>{day}</option> 
-                }
+                shop && shop.openDay.map( v => {
+                  if(v === index){
+                    option = <option value={index} selected key={`day${index}`}>{DAYS[v]}</option> 
+                  }
+                })
                 return option;
               }
               )}
-
-              {/* {data.openDay && days.map( (day, index) => {
-                
-              } )} */}
-
           </Input>
       </FormGroup>
       </Col>

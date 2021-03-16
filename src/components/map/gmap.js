@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
-import {Card, CardTitle } from 'reactstrap';
+  import {Card, CardTitle } from 'reactstrap';
 import moment from 'moment';
 import { DAYS } from '../../constant';
 

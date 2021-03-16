@@ -6,4 +6,4 @@ export const ADD_SHOP = 'ADD_SHOP';
 export const FILTER_SHOP = 'FILTER_SHOP';
 export const REMOVE_FILTER = 'REMOVE_FILTER';
 
-export const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+export const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']

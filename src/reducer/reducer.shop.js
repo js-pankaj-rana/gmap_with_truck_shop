@@ -9,7 +9,7 @@ const defaultState = {
         "location": "Near Regal Cinema",
         "openingTime": '09:00',
         "closingTime": '19:00',
-        "openDay": [1,2,3,4,5,6,7],
+        "openDay": [0,1,2,3,4,5,6],
         "lat": '28.625889',
         "lng": '77.234296',
       },
@@ -19,7 +19,7 @@ const defaultState = {
         "location": "Block P",
         "openingTime": '09:00',
         "closingTime": '19:00',
-        "openDay": [1,2,3,4,5,6,7],
+        "openDay": [0,1,2,3,4,5,6],
         "lat": '28.625899',
         "lng": '77.234296',
       },
@@ -29,7 +29,7 @@ const defaultState = {
         "location": "Near Shankar Market",
         "openingTime": '09:00',
         "closingTime": '19:00',
-        "openDay": [1,2,3,4,5,6,7],
+        "openDay": [0,1,2,3,4,5,6],
         "lat": '28.633570',
         "lng": '77.222912',
       },
@@ -39,7 +39,7 @@ const defaultState = {
         "location": "Front of Mandi house",
         "openingTime": '09:00',
         "closingTime": '19:00',
-        "openDay": [1,2,3,4,5,6,7],
+        "openDay": [0,1,2,3,4,5,6],
         "lat": '28.625899',
         "lng": '77.234296',
       },
@@ -49,7 +49,7 @@ const defaultState = {
         "location": "Block N",
         "openingTime": '09:00',
         "closingTime": '19:00',
-        "openDay": [1,2,3,4,5,6,7],
+        "openDay": [0,1,2,3,4,5,6],
         "lat": '28.630728',
         "lng": '77.221295'
       },
@@ -59,7 +59,7 @@ const defaultState = {
         "location": "KG Marg in front of British council",
         "openingTime": '09:00',
         "closingTime": '19:00',
-        "openDay": [1,2,3,4,5,6,7],
+        "openDay": [0,1,2,3,4,5,6],
         "lat": '28.626946',
         "lng": '77.222362',
       },
@@ -69,7 +69,7 @@ const defaultState = {
         "location": "Barakhamba Road in front of Metro Station",
         "openingTime": '09:00',
         "closingTime": '19:00',
-        "openDay": [1,2,3,4,5,6,7],
+        "openDay": [0,1,2,3,4,5,6],
         "lat": '28.628632',
         "lng": '77.226989',
       }],
@@ -87,7 +87,8 @@ const reducer = (state = defaultState, action) => {
             }];
             return {
                 ...state,
-                shops: [...state.shops, ...newShop]
+                shops: [...state.shops, ...newShop],
+                filterShop: [...state.filterShop, ...newShop]
               }
 
         case EDIT_SHOP:
