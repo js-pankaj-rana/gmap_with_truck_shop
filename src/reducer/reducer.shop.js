@@ -85,11 +85,20 @@ const reducer = (state = defaultState, action) => {
                 ...action.payload,
                 id: uuidv4()
             }];
-            return {
+            if(state.filterShop < 0){
+              return {
                 ...state,
                 shops: [...state.shops, ...newShop],
-                filterShop: [...state.filterShop, ...newShop]
               }
+            }
+            else {
+              return {
+                ...state,
+                shops: [...state.shops, ...newShop],
+                filterShop: [...state.filterShop, ...newShop],
+              }
+            }
+            
 
         case EDIT_SHOP:
             shops = state.shops.map( obj => {

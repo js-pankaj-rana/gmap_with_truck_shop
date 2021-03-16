@@ -46,8 +46,6 @@ const GoogleMapLocation = (props) => {
       }
     }
 
-    setCenter({lat: Number(lat), lng: Number(lng)})
-    
     setSelected(item);
   }
 
