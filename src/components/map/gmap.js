@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
-import {DaySelect} from './../days/days';
-import {Card, CardTitle, CardText} from 'reactstrap';
+import {Card, CardTitle } from 'reactstrap';
+import moment from 'moment';
+import { DAYS } from '../../constant';
 
 const containerStyle = {
   width: '100%',
@@ -9,10 +10,9 @@ const containerStyle = {
 };
 
 const GoogleMapLocation = (props) => {
-
   let {shops} = props;
-  
   const [ selected, setSelected ] = useState({});
+  const [ shopStatus, setShopStatus ] = useState('');
   
   const [ center, setCenter ] = useState({
     lat: 28.630420,
@@ -20,9 +20,36 @@ const GoogleMapLocation = (props) => {
   });
   
   const onSelect = item => {
+    
+    let {lat, lng, openDay, openingTime, closingTime} = item;
+    let timeInHhMm = moment().format('d:HH:mm');
+    let timeArray = timeInHhMm.split(':').map(element => Number(element));
+    if(openDay){
+      let openDayValue = timeArray[0]
+      if(openDay.includes(openDayValue)){
+        let currentTimeInMinuts = timeArray[1]*60 + timeArray[2];
+        let openTimeArray = (openingTime).split(':').map(element => Number(element));
+        let openTimeTimeInMinuts = openTimeArray[0]*60 + openTimeArray[1];
+
+        let closeTimeArray = (closingTime).split(':').map(element => Number(element));
+        let closeTimeTimeInMinuts = closeTimeArray[0]*60 + openTimeArray[1];
+        
+        if(currentTimeInMinuts > openTimeTimeInMinuts &&  currentTimeInMinuts < closeTimeTimeInMinuts){
+            setShopStatus("Open now");
+        }
+        else {
+          setShopStatus("Close now");
+        }
+      }
+      else {
+        setShopStatus(`Closed on ${DAYS[openDayValue]}`)
+      }
+    }
+
+    setCenter({lat: Number(lat), lng: Number(lng)})
+    
     setSelected(item);
   }
-
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API
@@ -40,11 +67,15 @@ const GoogleMapLocation = (props) => {
     setMap(null)
 
   }, [])
+  const clearOnClose = () => {
+    setSelected({});
+    setShopStatus('');
+  }
 
-  useEffect(() => {
-    console.log(selected)
-
-  }, [selected])
+useEffect(() => {
+  console.log(selected)    
+  console.log(shopStatus)    
+}, [selected, shopStatus])
 
   return isLoaded ? (
       <GoogleMap
@@ -64,7 +95,7 @@ const GoogleMapLocation = (props) => {
               <Marker 
                 key={`item${id}`}
                 position={{lat, lng}}
-                onClick={() => onSelect(item)}  
+                onClick={() => onSelect(item)} 
               />
             )
           })
@@ -75,13 +106,12 @@ const GoogleMapLocation = (props) => {
               <InfoWindow
               position={{lat: Number(selected.lat), lng: Number(selected.lng)}}
               clickable={true}
-              onCloseClick={() => setSelected({})}
+              onCloseClick={clearOnClose}
             >
               <Card body inverse>
-                <CardTitle tag="h5">{selected.type}</CardTitle>
-                <CardText>{`Open Time: ${selected.openingTime} `} </CardText>
-                <CardText>{`Close Time: ${selected.closingTime} `}</CardText>
-                <DaySelect openDay={selected.openDay} />
+              {shopStatus && <CardTitle tag="h5">{
+              `${selected.type}: ${shopStatus}`
+              }</CardTitle> }
               </Card>
             </InfoWindow>
             )
